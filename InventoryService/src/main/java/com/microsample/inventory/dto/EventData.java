@@ -1,4 +1,4 @@
-package com.microsample.eventLogger.dto;
+package com.microsample.inventory.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
