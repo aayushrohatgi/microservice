@@ -20,6 +20,7 @@ public class EventRecieverListenerImpl implements EventRecieverListener {
 	@Autowired
 	private EventLoggerService eventLoggerService;
 	
+	@Override
 	@StreamListener(target = EventReciever.INPUT)
 	public void fetchAndRegisterEvent(EventData data) {
 		LocalDateTime timestamp = LocalDateTime.parse(data.getTimeStamp(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
