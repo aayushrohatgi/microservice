@@ -4,5 +4,5 @@ import com.microsample.inventory.dto.EventData;
 
 public interface EventLogOutHandler {
 
-	void sendInventoryChangeEvent(EventData event);
+	public void sendInventoryChangeEvent(EventData event);
 }
