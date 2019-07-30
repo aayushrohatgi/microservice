@@ -3,20 +3,20 @@ package com.order.dto;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.GenericGenerator;
 
 
 @Entity
 @Table(name = "orders")
 public class OrderDto {
 	
-	@Id @GeneratedValue(generator="system-uuid")
-	@GenericGenerator(name="system-uuid", strategy = "uuid")
-	@Column(name="orderCode")
-	private String orderCode;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "orderCode")
+	private int orderCode;
 	
 	@Column(name="productCode")
 	private String productCode;
@@ -45,12 +45,12 @@ public class OrderDto {
 	public void setTotalPrice(double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
-
-	public String getOrderCode() {
+	public int getOrderCode() {
 		return orderCode;
 	}
-
-	public void setOrderCode(String orderCode) {
+	public void setOrderCode(int orderCode) {
 		this.orderCode = orderCode;
 	}
+
+	
 }
