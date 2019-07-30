@@ -10,14 +10,22 @@ import org.springframework.web.client.RestTemplate;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
+import com.order.dao.OrderDao;
+import com.order.dto.OrderDto;
 
 @Service
 public class OrderService {
 	
 	 @Autowired
-	    private RestTemplate restTemplate;
-	    @Autowired
-	    private EurekaClient eurekaClient;
+	 private RestTemplate restTemplate;
+	 
+	 @Autowired
+	 private EurekaClient eurekaClient;
+	 
+	 @Autowired
+	 private OrderDao orderDao;
+	    
+	    
 
 	
 	public boolean createOrder() 
@@ -29,6 +37,10 @@ public class OrderService {
         Map<String, String> params = new HashMap<>();
         Boolean b = restTemplate.getForObject(url, Boolean.class, params);
         System.out.println(b);
+        OrderDto order = new OrderDto();
+        order.setProductCode("1");
+        order.setQuantity(1);
+        orderDao.save(order);
         return b;
 	}
 }
