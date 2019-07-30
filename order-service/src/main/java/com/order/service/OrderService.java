@@ -1,5 +1,6 @@
 package com.order.service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
 import com.order.dao.OrderDao;
+import com.order.dto.EventData;
 import com.order.dto.OrderDto;
 
 @Service
@@ -24,10 +26,10 @@ public class OrderService {
 	 
 	 @Autowired
 	 private OrderDao orderDao;
-	    
-	    
 
-	
+	 @Autowired
+	 private EventLoggingHandler eventLoggingHandler;
+	 
 	public boolean createOrder() 
 	{
 		Application application = eurekaClient.getApplication("inventory-service");
@@ -41,6 +43,14 @@ public class OrderService {
         order.setProductCode("1");
         order.setQuantity(1);
         orderDao.save(order);
+        eventLoggingHandler.sendOrderCreatedEvent(generateEvent(order));
         return b;
+	}
+	
+	private EventData generateEvent(OrderDto dto) {
+		EventData data = new EventData();
+		data.setEventName("Order " + dto.getOrderCode() + " has been created.");
+		data.setTimeStamp(LocalDateTime.now().toString());
+		return data;
 	}
 }
